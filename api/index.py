@@ -36,7 +36,13 @@ def get_stream(video_id: str):
             'quiet': True,
             'simulate': True,
             'noplaylist': True,
+            'cachedir': False,
+            # THE BYPASS: Disguise the request as an official mobile app to dodge the bot block
+            'extractor_args': {
+                'youtube': ['client=IOS,ANDROID']
+            }
         }
+        
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(f"https://www.youtube.com/watch?v={video_id}", download=False)
             return {"success": True, "url": info['url']}
